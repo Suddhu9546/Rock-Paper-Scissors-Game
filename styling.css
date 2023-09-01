@@ -1,0 +1,487 @@
+/* Font */
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Barlow Semi Condensed", sans-serif;
+  background-color: #89C15E;
+  min-height: 100vh;
+  color: var(--light-text);
+}
+
+/* Main Content */
+.container {
+  position: relative;
+  max-width: 850px;
+  margin: 0 auto;
+  padding-top: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 150px;
+  border: 3px solid white;
+  border-radius: 20px;
+  padding: 1rem 1.4rem 1rem 2rem;
+}
+
+.header h1{
+    color: white;
+    letter-spacing: 3px;
+    font-family: Arial, Helvetica, sans-serif; 
+}
+
+.scores {
+    display: flex;
+    justify-content: flex-end;
+    width: 300px;
+    gap: 25px;
+    height: 100%;
+    line-height: 1;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 10px;
+  width: 150px;
+  height: 100%;
+  line-height: 1;
+}
+
+.score__title {
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  color:#656565;
+  font-weight: 550;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.score__number {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #252525;
+}
+
+/* Game */
+.game {
+  position: relative;
+  display: grid;
+  grid-template-columns: (repeat(2, 1fr));
+  grid-template-areas:
+    "paper scissors"
+    "rock rock";
+  place-items: center;
+  height: 25rem;
+}
+.game::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 34%;
+  top: 22%;
+  background: url("triangle-svg.png") no-repeat;
+  opacity: 55%;
+  background-size: 18rem;
+  z-index: -1;
+}
+
+.choice-btn {
+  border: none;
+  outline: none;
+  background: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.choice {
+  position: relative;
+  width: 7rem;
+  height: 7rem;
+  background: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6);
+}
+.choice::before,
+.choice::after {
+  content: "";
+  position: absolute;
+  left: -25%;
+  top: -25%;
+  width: 130%;
+  height: 130%;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.choice::after {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.choice-btn:focus .choice::after {
+  opacity: 1;
+  box-shadow: 0 0 0 2rem #2E9A2563;
+  z-index: -2;
+  margin: 0.6rem 0 0 0.6rem;
+}
+
+.choice img {
+  transform: scale(1.5);
+  height: 2rem;
+}
+
+.choice.paper::before{
+  position: absolute;
+  top: -15%;
+  left: -15%;
+  background-color: #FFA943;
+}
+.choice.scissors::before{
+  position: absolute;
+  top: -15%;
+  left: -15%;
+  background-color: #BD00FF;
+}
+.choice.rock::before{
+  position: absolute;
+  top: -15%;
+  left: -15%;
+  background-color: #0074B6;
+}
+
+.choice-btn[data-choice="paper"] {
+  grid-area: paper;
+  position: relative;
+  top: 14rem;
+  left: 12.3rem;
+}
+.choice-btn[data-choice="scissors"] {
+  grid-area: scissors;
+  position: absolute;
+  top: 4.2rem;
+  left: 1rem;
+}
+.choice-btn[data-choice="rock"] {
+  grid-area: rock;
+  position: relative;
+  top: -11rem;
+  left: -7rem;
+}
+
+/* Results */
+.results {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  place-items: center;
+  grid-template-areas:
+    "you-title pc-title"
+    "you-picked pc-picked";
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.results__heading {
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  padding: 4rem 0 9rem;
+}
+.results__result {
+  margin-top: -5rem;
+  margin-left: 3.5rem;
+  min-width: 10rem;
+  min-height: 10rem;
+  border-radius: 50%;
+  transform: scale(1.4);
+  z-index: -1;
+}
+
+.results__heading:first-of-type {
+  grid-area: you-title;
+  color: white;
+}
+.results__heading:last-of-type {
+  grid-area: pc-title;
+  color: white;
+}
+.results__result:first-of-type {
+  grid-area: you-picked;
+}
+.results__result:last-of-type {
+  grid-area: pc-picked;
+}
+
+.results.show-winner {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    "you-title . pc-title"
+    "you-picked result-winner pc-picked";
+    color: white;
+}
+
+.winner .choice::after {
+  box-shadow: 0 0 0 30px #2E9A25, 0 0 0 60px #38ae2e63, 0 0 0 45px #2E9A2563;
+  animation: winner 1s ease forwards;
+  position: absolute;
+  top: -15%;
+  left: -15%;
+}
+
+@keyframes winner {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.results__winner {
+  grid-area: result-winner;
+  display: grid;
+  place-items: center;
+}
+
+.results__text1 {
+  font-size: 3.5rem;
+  margin-top: -3rem;
+  letter-spacing: 0.2rem;
+  color: white;
+}
+.results__text2 {
+  font-size: 2rem;
+  padding-bottom: 3rem;
+  letter-spacing: 0.2rem;
+  color: white;
+}
+
+.play-again {
+  background: #fff;
+  outline: none;
+  border: 2px solid transparent;
+  border-radius: 0.6rem;
+  color: #6B6B6B;
+  font-weight: 600;
+  padding: 0.6rem 2.5rem;
+  font-family: inherit;
+  text-transform: inherit;
+  font-size: 1.3rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  margin-top: -2rem;
+  z-index: 1;
+}
+.play-again:focus {
+  border: 3px solid #0c500563;
+}
+
+.re-play{
+  opacity: 0;
+  background: #fff;
+  outline: none;
+  border: 2px solid transparent;
+  border-radius: 0.6rem;
+  color: #6B6B6B;
+  font-weight:600;
+  padding: 0.6rem 2.5rem;
+  font-family: inherit;
+  text-transform: inherit;
+  font-size: 1.3rem;
+  letter-spacing: 0.1em;
+  margin-top: -1rem;
+  cursor: pointer;
+  z-index: 1;
+}
+.re-play:focus {
+  border: 3px solid #0c500563;
+}
+
+.next-btn {
+  position: absolute;
+  bottom: 1.2rem;
+  right: 10rem;
+  background: none;
+  outline: none;
+  border: 3px solid white;
+  border-radius: 0.6rem;
+  color: white;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0.4rem 1.6rem;
+  text-transform: inherit;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  opacity: 0; 
+}
+
+/* Rules Button */
+.rules-btn {
+  position: absolute;
+  bottom: 1.2rem;
+  right: 2rem;
+  background: none;
+  outline: none;
+  border: 3px solid white;
+  border-radius: 0.6rem;
+  color: white;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0.4rem 1.2rem;
+  text-transform: inherit;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.rules-btn:focus {
+  border: 2px solid #fff;
+}
+
+/* Rules Modal */
+.modal {
+  position:absolute;
+    max-width: 20rem;
+    max-height: 75rem;
+    top: 19rem;
+    left: 76%;
+    place-items:center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    border: 0.4rem solid white;
+    background-color: #004429;
+    border-radius: 0.5rem;
+    
+}
+.modal__container {
+    border-radius: 10rem;
+}
+.modal__header {
+    width: 100%;
+    height: 60%;
+    padding: 1rem 2rem 1rem;
+}
+.modal__heading {
+    font-size: 1.4rem;
+    color: white;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.close-btn {
+  position: absolute;
+    top: -10%;
+    left: 93%;
+    border: 0.2rem solid white;
+    border-radius: 50%;
+    outline: none;
+    background-color: #FF0000;
+    color: white;
+    font-size: 3rem;
+    cursor: pointer;
+    width: 20%;
+}
+
+.modal__header li{
+    padding: 10px 10px 0 10px;
+    list-style: square;
+}
+li{
+  color: yellow;
+}
+li span{
+  color: white;
+}
+
+.show-modal {
+  opacity: 1;
+  pointer-events: initial;
+}
+
+/* Utilities */
+.preload * {
+  transition: none;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Winner Page */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Barlow Semi Condensed", sans-serif;
+  background-color: #89C15E;
+}
+
+.Stars {
+  text-align: center;
+  padding-top: 3rem;
+}
+.Stars img {
+  width: 27rem;
+}
+
+.winner-cup {
+  text-align: center;
+  margin-top: -11rem;
+}
+.winner-cup img {
+  height: 11rem;
+  width: 11rem;
+}
+
+.winning-text {
+  text-align: center;
+  margin-top: 2rem;
+  color: white;
+  letter-spacing: 0.3rem;
+  font-family: Arial, Helvetica, sans-serif
+}
+.winning-text h1{
+  font-size: 5rem;
+}
+.winning-text h4{
+  font-size: 2.1rem;
+}
+
+.playagainbtn {
+  text-align: center;
+}
+.playagain {
+  background: #fff;
+  outline: none;
+  border: 2px solid transparent;
+  border-radius: 0.6rem;
+  color: #6B6B6B;
+  font-weight: 600;
+  padding: 0.6rem 2.5rem;
+  font-family: inherit;
+  text-transform: inherit;
+  font-size: 1.3rem;
+  letter-spacing: 0.1em;
+  margin-top: 3rem;
+  cursor: pointer;
+}
+.playagain:active {
+  border: 3px solid #0c500563;
+}

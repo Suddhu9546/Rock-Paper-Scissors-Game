@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors</title>
+    <link rel="stylesheet" href="styling.css" />
+    <script src="backend.js" defer></script>
+</head>
+<body>
+    <div class="container1">
+        <div class="Stars">
+            <img src="Group 5.png" alt="">
+        </div>
+        <div class="winner-cup">
+            <img src="Vector.png" alt="">
+        </div>
+        <div class="winning-text">
+            <h1>HURRAY!!</h1>
+            <h4>YOU WON THE GAME</h3>
+        </div>
+
+        <div class="playagainbtn" onclick="location.href='index.html';">
+            <button class="playagain">PLAY AGAIN</button>
+        </div>
+
+        <button class="rules-btn" tabindex="1">RULES</button>
+        <div class="modal">
+            <div class="modal__container">
+                <header class="modal__header">
+                    <h2 class="modal__heading">Game Rules</h2>
+                    <button class="close-btn">&times;</button>
+                    <div class="rules">
+                        <ul>
+                            <li><span>Rock beats scissors, scissors beat paper, and paper beats rock.</span></li>
+                           <li><span>Agree ahead of time whether you'll count off "rock, paper, scissors, 
+                              shoot" or just "rock, paper, scissors."</span></li>
+                         <li><span>Use rock, paper, scissors to settle minor decisions or simply play
+                              to pass the time</span></li>
+                         <li><span>If both players lay down the same hand, each player lays down another hand</span></li>
+                        </ul>
+                    </div>  
+                </header>
+            </div>
+        </div>      
+    </div>
+    <script>
+        const btnRules2 = document.querySelector(".rules-btn");
+        const btnClose2= document.querySelector(".close-btn");
+        const modalRules2 = document.querySelector(".modal");
+
+        // Show/Hide Rules
+        btnRules2.addEventListener("click", () => {
+          modalRules2.classList.toggle("show-modal");
+        });
+        btnClose2.addEventListener("click", () => {
+          modalRules2.classList.toggle("show-modal");
+        });
+    </script>
+</body>
+</html>
